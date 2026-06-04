@@ -1,0 +1,46 @@
+<% content_for :title, "#{@category} — Torren Clifford" %>
+
+<div class="travel-header">
+  <h1>Travel + Landscape — <%= @category %></h1>
+</div>
+
+<% if @projects.any? %>
+  <div class="grid">
+    <% @projects.each do |project| %>
+      <div class="card"
+           data-img="<%= project.image_url %>"
+           data-caption="<%= project.title %>">
+        <img src="<%= project.image_url %>" alt="<%= project.title %>" loading="lazy" />
+        <div class="card-info">
+          <div class="card-title"><%= project.title %></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="page-content">
+    <p>Coming soon.</p>
+  </div>
+<% end %>
+
+<script>
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.getElementById('lightbox-img').src = card.dataset.img;
+      document.getElementById('lightbox-caption').textContent = card.dataset.caption;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>

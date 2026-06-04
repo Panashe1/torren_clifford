@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Torren Clifford" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <%= link_to "Torren Clifford", root_path, class: "logo" %>
+
+        <nav id="nav">
+          <%= link_to "Home", root_path %>
+
+          <div class="has-dropdown">
+            <button class="dropdown-toggle">Select Projects ▾</button>
+            <div class="dropdown">
+              <div class="dropdown-section">
+                <span class="dropdown-label">Design</span>
+                <%= link_to "Design Project 1", root_path %>
+                <%= link_to "Design Project 2", root_path %>
+                <%= link_to "Design Project 3", root_path %>
+                <%= link_to "Design Project 4", root_path %>
+                <%= link_to "Design Project 5", root_path %>
+                <%= link_to "Design Project 6", root_path %>
+                <%= link_to "Design Project 7", root_path %>
+                <%= link_to "Design Project 8", root_path %>
+              </div>
+              <div class="dropdown-section">
+                <span class="dropdown-label">Collaboration</span>
+                <%= link_to "Design Project 9", root_path %>
+                <%= link_to "Design Project 10", root_path %>
+                <%= link_to "Design Project 11", root_path %>
+                <%= link_to "Design Project 12", root_path %>
+              </div>
+            </div>
+          </div>
+
+          <div class="has-dropdown">
+            <button class="dropdown-toggle">Travel + Landscape ▾</button>
+            <div class="dropdown">
+              <div class="dropdown-section">
+                <%= link_to "Japan",        travel_path("japan") %>
+                <%= link_to "Scandinavia",  travel_path("scandinavia") %>
+                <%= link_to "Paris",        travel_path("paris") %>
+                <%= link_to "Italy",        travel_path("italy") %>
+                <%= link_to "New Zealand",  travel_path("new-zealand") %>
+              </div>
+            </div>
+          </div>
+
+          <%= link_to "About",   about_path %>
+          <%= link_to "Contact", contact_path %>
+        </nav>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+      <span>&copy; <%= Date.current.year %> Torren Clifford</span>
+      <span>Melbourne, Australia</span>
+      <%= link_to "Contact", contact_path %>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightbox-close">&times;</button>
+      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </body>
+</html>
