@@ -217,6 +217,77 @@ nav a:hover, .dropdown-toggle:hover { color: var(--light); }
   margin-top: 2px;
 }
 
+/* ── ABOUT SPLIT ── */
+.about-split {
+  display: flex;
+  min-height: calc(100vh - 56px);
+}
+
+.about-split-image {
+  width: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.about-split-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.about-split-copy {
+  width: 50%;
+  padding: 80px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-split-copy h1 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 40px;
+}
+
+.about-split-copy p {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--mid);
+  margin-bottom: 20px;
+}
+
+.about-split-copy a {
+  color: var(--black);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.about-split-copy a:hover {
+  color: var(--light);
+}
+
+@media (max-width: 768px) {
+  .about-split {
+    flex-direction: column;
+  }
+  .about-split-image,
+  .about-split-copy {
+    width: 100%;
+  }
+  .about-split-image {
+    height: 60vw;
+  }
+  .about-split-copy {
+    padding: 48px 24px;
+  }
+}
+
 /* ── PAGE CONTENT ── */
 .page-content {
   max-width: 680px;

@@ -1,22 +1,43 @@
+ProjectImage.destroy_all
 Project.destroy_all
 
-architecture_projects = [
-  { title: "Design Project 1",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80", featured: true,  position: 1 },
-  { title: "Design Project 2",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80", featured: false, position: 2 },
-  { title: "Design Project 3",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=80", featured: false, position: 3 },
-  { title: "Design Project 4",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=900&q=80", featured: false, position: 4 },
-  { title: "Design Project 5",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=900&q=80", featured: false, position: 5 },
-  { title: "Design Project 6",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1501183638710-841dd1904471?w=900&q=80", featured: false, position: 6 },
-  { title: "Design Project 7",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=80", featured: false, position: 7 },
-  { title: "Design Project 8",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80", featured: false, position: 8 },
-  { title: "Design Project 9",  architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=900&q=80", featured: false, position: 9 },
-  { title: "Design Project 10", architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80", featured: false, position: 10 },
-  { title: "Design Project 11", architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=900&q=80", featured: false, position: 11 },
-  { title: "Design Project 12", architect: "Old Four Legs", image_url: "https://images.unsplash.com/photo-1556912167-f556f1f39fdf?w=900&q=80", featured: false, position: 12 },
+# Chair / furniture image pools to rotate through per project
+chair_images = [
+  "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1400&q=85",
+  "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=85",
+  "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=1400&q=85",
+  "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&q=85",
+  "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=1400&q=85",
+  "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=1400&q=85",
+  "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=1400&q=85",
+  "https://images.unsplash.com/photo-1519947486511-46149fa0a254?w=1400&q=85",
+  "https://images.unsplash.com/photo-1549187774-b4e9b0445b41?w=1400&q=85",
+  "https://images.unsplash.com/photo-1561677843-39dee7a319ca?w=1400&q=85",
+  "https://images.unsplash.com/photo-1571898223751-37df3929b8c5?w=1400&q=85",
+  "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=1400&q=85",
+  "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1400&q=85",
+  "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=1400&q=85",
+  "https://images.unsplash.com/photo-1604578762246-41134e37f9cc?w=1400&q=85",
+  "https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=1400&q=85",
 ]
 
-architecture_projects.each do |attrs|
-  Project.create!(attrs.merge(category: "architecture"))
+12.times do |i|
+  project = Project.create!(
+    title:     "Design Project #{i + 1}",
+    architect: "Old Four Legs",
+    image_url: chair_images[i % chair_images.length],
+    category:  "architecture",
+    featured:  i == 0,
+    position:  i + 1
+  )
+
+  # 4–5 images per project, cycling through the pool offset by project index
+  4.times do |j|
+    project.project_images.create!(
+      image_url: chair_images[(i + j) % chair_images.length],
+      position:  j + 1
+    )
+  end
 end
 
 travel_projects = [
