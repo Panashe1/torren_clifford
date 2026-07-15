@@ -30,28 +30,9 @@
             <div class="dropdown">
               <div class="dropdown-section">
                 <span class="dropdown-label">Design</span>
-                <% @nav_projects.first(8).each do |p| %>
+                <% @nav_projects.each do |p| %>
                   <%= link_to p.title, project_path(p) %>
                 <% end %>
-              </div>
-              <div class="dropdown-section">
-                <span class="dropdown-label">Collaboration</span>
-                <% @nav_projects.drop(8).each do |p| %>
-                  <%= link_to p.title, project_path(p) %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-
-          <div class="has-dropdown">
-            <button class="dropdown-toggle">Travel + Landscape ▾</button>
-            <div class="dropdown">
-              <div class="dropdown-section">
-                <%= link_to "Japan",        travel_path("japan") %>
-                <%= link_to "Scandinavia",  travel_path("scandinavia") %>
-                <%= link_to "Paris",        travel_path("paris") %>
-                <%= link_to "Italy",        travel_path("italy") %>
-                <%= link_to "New Zealand",  travel_path("new-zealand") %>
               </div>
             </div>
           </div>

@@ -7,9 +7,4 @@ class PagesController < ApplicationController
   def about; end
 
   def contact; end
-
-  def travel
-    @category = params[:category].titleize
-    @projects = Project.where(category: params[:category]).order(:position)
-  end
 end

@@ -5,7 +5,6 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
-    @images = @project.project_images
-    @images = [@project] if @images.empty?
+    @images = @project.gallery
   end
 end

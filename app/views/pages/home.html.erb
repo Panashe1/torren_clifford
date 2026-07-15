@@ -2,7 +2,7 @@
 
 <% if @hero_project %>
   <section class="hero">
-    <img src="<%= @hero_project.image_url %>" alt="<%= @hero_project.title %>" />
+    <img src="<%= @hero_project.cover_url %>" alt="<%= @hero_project.title %>" />
     <div class="hero-caption"><%= @hero_project.title %> / <%= @hero_project.architect %></div>
   </section>
 <% end %>
@@ -11,36 +11,13 @@
 
 <div class="grid">
   <% @projects.each do |project| %>
-    <div class="card"
-         data-img="<%= project.image_url %>"
-         data-caption="<%= project.title %> / <%= project.architect %>">
-      <img src="<%= project.image_url %>" alt="<%= project.title %>" loading="lazy" />
+    <%= link_to project_path(project), class: "card" do %>
+      <img src="<%= project.cover_url %>" alt="<%= project.title %>" loading="lazy" />
       <div class="card-info">
         <div class="card-title"><%= project.title %></div>
         <div class="card-sub"><%= project.architect %></div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>
 
-<script>
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.getElementById('lightbox-img').src = card.dataset.img;
-      document.getElementById('lightbox-caption').textContent = card.dataset.caption;
-      document.getElementById('lightbox').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
-  document.getElementById('lightbox').addEventListener('click', e => {
-    if (e.target === document.getElementById('lightbox')) closeLightbox();
-  });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-</script>

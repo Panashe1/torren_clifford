@@ -169,11 +169,13 @@ nav a:hover, .dropdown-toggle:hover { color: var(--light); }
 }
 
 .card {
+  display: block;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   background: #f0f0f0;
   aspect-ratio: 4/3;
+  text-decoration: none;
 }
 
 .card img {
@@ -242,7 +244,7 @@ nav a:hover, .dropdown-toggle:hover { color: var(--light); }
   padding: 80px 64px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .about-split-copy h1 {
@@ -272,19 +274,41 @@ nav a:hover, .dropdown-toggle:hover { color: var(--light); }
   color: var(--light);
 }
 
-@media (max-width: 768px) {
+/* Tablet: ease the 50/50 padding so the copy doesn't feel cramped */
+@media (max-width: 1024px) {
+  .about-split-copy {
+    padding: 56px 40px;
+  }
+}
+
+/* Portrait tablet & mobile: stack image above copy */
+@media (max-width: 900px) {
   .about-split {
     flex-direction: column;
+    min-height: 0;
   }
   .about-split-image,
   .about-split-copy {
     width: 100%;
   }
   .about-split-image {
-    height: 60vw;
+    /* Give the portrait photo a natural, uncramped ratio instead of a
+       short fixed height that crops the subject */
+    aspect-ratio: 4 / 5;
+    max-height: 70vh;
   }
   .about-split-copy {
-    padding: 48px 24px;
+    padding: 48px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-split-image {
+    aspect-ratio: 3 / 4;
+    max-height: 60vh;
+  }
+  .about-split-copy {
+    padding: 40px 24px;
   }
 }
 
@@ -438,9 +462,12 @@ nav a:hover, .dropdown-toggle:hover { color: var(--light); }
   white-space: nowrap;
 }
 
-/* ── MOBILE ── */
+/* ── TABLET ── */
 @media (max-width: 900px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Shorter hero so the piece isn't cropped by a full-height cover */
+  .hero { height: 65vh; }
 }
 
 @media (max-width: 600px) {
@@ -465,5 +492,15 @@ nav a:hover, .dropdown-toggle:hover { color: var(--light); }
   .section-title { padding: 32px 20px 16px; }
   .page-content { margin: 48px auto; padding: 0 20px; }
   .site-footer { flex-direction: column; gap: 8px; text-align: center; }
+
+  /* Mobile hero: shorter still, and anchor the crop to the top so the
+     subject of tall product shots stays in frame */
+  .hero { height: 56vh; }
+  .hero img { object-position: center top; }
   .hero-caption { left: 20px; bottom: 20px; }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+  .hero { height: 50vh; }
 }

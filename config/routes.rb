@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   resources :projects, only: [:index, :show]
 
-  get "travel/:category" => "pages#travel", as: :travel
-
   get "up" => "rails/health#show", as: :rails_health_check
+
+  # Silence favicon.ico requests (no content) until a real favicon is added
+  get "favicon.ico", to: proc { [204, {}, []] }
 end

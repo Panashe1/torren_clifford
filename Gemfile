@@ -16,6 +16,12 @@ gem "turbo-rails"
 gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+# Generate resized image variants for Active Storage [https://github.com/janko/image_processing]
+gem "image_processing", ">= 1.2"
+gem "rack-attack"        # rate limiting / brute-force protection
+gem "secure_headers"     # CSP, HSTS, X-Frame-Options headers
+gem "dotenv-rails"       # keep secrets out of code
+gem "stripe"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"

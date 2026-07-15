@@ -6,7 +6,7 @@
   <div class="project-slides" id="projectSlides">
     <% @images.each_with_index do |img, i| %>
       <div class="project-slide <%= i == 0 ? 'active' : '' %>" data-index="<%= i %>">
-        <img src="<%= img.respond_to?(:image_url) ? img.image_url : img.image_url %>"
+        <img src="<%= img.display_url %>"
              alt="<%= @project.title %> — image <%= i + 1 %>" />
       </div>
     <% end %>
@@ -165,36 +165,50 @@
 </style>
 
 <script>
-  const slides = document.querySelectorAll('.project-slide');
-  const counter = document.getElementById('currentSlide');
-  const arrowLeft = document.getElementById('arrowLeft');
-  const arrowRight = document.getElementById('arrowRight');
-  let current = 0;
+  // Wrapped in an IIFE so nothing leaks to the global scope — this lets the
+  // viewer re-initialise correctly on Turbo navigations, not just hard refreshes.
+  (function () {
+    const slides = document.querySelectorAll('.project-slide');
+    if (!slides.length) return;
 
-  function goTo(n) {
-    slides[current].classList.remove('active');
-    current = (n + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    counter.textContent = current + 1;
-    arrowLeft.classList.toggle('hidden', current === 0);
-    arrowRight.classList.toggle('hidden', current === slides.length - 1);
-  }
+    const counter = document.getElementById('currentSlide');
+    const arrowLeft = document.getElementById('arrowLeft');
+    const arrowRight = document.getElementById('arrowRight');
+    let current = 0;
 
-  document.getElementById('clickNext').addEventListener('click', () => {
-    if (current < slides.length - 1) goTo(current + 1);
-  });
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      counter.textContent = current + 1;
+      arrowLeft.classList.toggle('hidden', current === 0);
+      arrowRight.classList.toggle('hidden', current === slides.length - 1);
+    }
 
-  document.getElementById('clickPrev').addEventListener('click', () => {
-    if (current > 0) goTo(current - 1);
-  });
+    document.getElementById('clickNext').addEventListener('click', () => {
+      if (current < slides.length - 1) goTo(current + 1);
+    });
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight') goTo(current + 1);
-    if (e.key === 'ArrowLeft')  goTo(current - 1);
-    if (e.key === 'Escape')     window.location = '<%= root_path %>';
-  });
+    document.getElementById('clickPrev').addEventListener('click', () => {
+      if (current > 0) goTo(current - 1);
+    });
 
-  // Init arrow visibility
-  arrowLeft.classList.add('hidden');
-  if (slides.length <= 1) arrowRight.classList.add('hidden');
+    function onKeydown(e) {
+      if (e.key === 'ArrowRight') goTo(current + 1);
+      if (e.key === 'ArrowLeft')  goTo(current - 1);
+      if (e.key === 'Escape')     window.location = '<%= root_path %>';
+    }
+    document.addEventListener('keydown', onKeydown);
+
+    // Remove the document-level listener when Turbo navigates away so stale
+    // handlers from previous project pages don't pile up.
+    document.addEventListener('turbo:before-render', function cleanup() {
+      document.removeEventListener('keydown', onKeydown);
+      document.removeEventListener('turbo:before-render', cleanup);
+    });
+
+    // Init arrow visibility
+    arrowLeft.classList.add('hidden');
+    if (slides.length <= 1) arrowRight.classList.add('hidden');
+  })();
 </script>
